@@ -932,7 +932,7 @@ function renderCheckout() {
     freshBtn.disabled = true;
 
     try {
-      const res = await fetch('${API_BASE_URL}/api/orders', {
+      const res = await fetch(`${API_BASE_URL}/api/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -1194,7 +1194,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   try {
-    const res = await fetch('${API_BASE_URL}/api/products');
+    const res = await fetch(`${API_BASE_URL}/api/products`);
     PRODUCTS = await res.json();
   } catch (err) {
     console.error("Failed to fetch products", err);

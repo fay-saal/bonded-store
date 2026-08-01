@@ -33,7 +33,7 @@ async function authFetch(url, options = {}) {
 document.getElementById('btn-login').addEventListener('click', async () => {
   const pwd = document.getElementById('admin-password').value;
   try {
-    const res = await fetch('${API_BASE_URL}/api/admin/login', {
+    const res = await fetch(`${API_BASE_URL}/api/admin/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password: pwd })
@@ -73,13 +73,13 @@ if (getToken()) {
 async function initAdmin() {
   // Load data
   try {
-    const pRes = await fetch('${API_BASE_URL}/api/products');
+    const pRes = await fetch(`${API_BASE_URL}/api/products`);
     adminProducts = await pRes.json();
     
-    const oRes = await authFetch('${API_BASE_URL}/api/admin/orders');
+    const oRes = await authFetch(`${API_BASE_URL}/api/admin/orders`);
     adminOrders = await oRes.json();
     
-    const sRes = await authFetch('${API_BASE_URL}/api/admin/stats');
+    const sRes = await authFetch(`${API_BASE_URL}/api/admin/stats`);
     const statsData = await sRes.json();
     
     // Wire up tabs
@@ -374,7 +374,7 @@ async function saveNewProduct() {
   };
 
   try {
-    const res = await authFetch('${API_BASE_URL}/api/products', {
+    const res = await authFetch(`${API_BASE_URL}/api/products`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -436,7 +436,7 @@ async function updateProduct() {
     formData.append('image', fileInput.files[0]);
 
     try {
-      const upRes = await authFetch('${API_BASE_URL}/api/admin/upload', {
+      const upRes = await authFetch(`${API_BASE_URL}/api/admin/upload`, {
         method: 'POST',
         // FormData doesn't need Content-Type header manually set, browser does it
         body: formData
@@ -510,7 +510,7 @@ function startGlobalBadgePolling() {
 
 async function updateGlobalBadge() {
   try {
-    const res = await authFetch('${API_BASE_URL}/api/admin/messages');
+    const res = await authFetch(`${API_BASE_URL}/api/admin/messages`);
     if (res.ok) {
       const convs = await res.json();
       const totalUnread = convs.reduce((sum, c) => sum + c.unreadCount, 0);
@@ -529,7 +529,7 @@ async function updateGlobalBadge() {
 
 async function fetchConversations() {
   try {
-    const res = await authFetch('${API_BASE_URL}/api/admin/messages');
+    const res = await authFetch(`${API_BASE_URL}/api/admin/messages`);
     if (!res.ok) return;
     const convs = await res.json();
     renderConversations(convs);
