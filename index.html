@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bonded Bazar | Premium Digital Store</title>
+  <meta name="description" content="Get premium digital subscriptions, gaming cards, and more instantly at Bonded Bazar. Best prices in Bangladesh.">
+  
+  <!-- OpenGraph & Discord Embeds -->
+  <meta property="og:title" content="Bonded Bazar | Premium Digital Store">
+  <meta property="og:description" content="Get premium digital subscriptions, gaming cards, and more instantly at Bonded Bazar. Best prices in Bangladesh.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bondedbazar.com">
+  <meta property="og:image" content="https://bondedbazar.com/assets/banner.png">
+  <meta name="theme-color" content="#2d4fff">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dark-theme">
+
+  <!-- ANIMATED GRADIENT MESH -->
+  <div class="bg-mesh">
+    <div class="bg-mesh__blob bg-mesh__blob--1"></div>
+    <div class="bg-mesh__blob bg-mesh__blob--2"></div>
+    <div class="bg-mesh__blob bg-mesh__blob--3"></div>
+  </div>
+
+  <div class="app-container">
+
+  <!-- Scroll Progress Bar -->
+  <div id="scroll-progress" class="scroll-progress"></div>
+
+  <!-- Background layers -->
+  <div class="scan-line" aria-hidden="true"></div>
+  <div class="topo-bg" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- ════════════════════════════════════════════════════════
+       NAVBAR
+       ════════════════════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="heading-brand navbar__logo" id="nav-logo">Bonded</a>
+
+    <div class="navbar__search">
+      <div class="navbar__search-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <input type="text" class="navbar__search-input" id="search-input" placeholder="Search for products, subscriptions..." autocomplete="off">
+    </div>
+
+    <div class="navbar__actions">
+      <select id="currency-toggle" class="currency-toggle">
+        <option value="BDT">BDT (৳)</option>
+        <option value="USD">USD ($)</option>
+      </select>
+      <a href="#/my-orders" class="navbar__action-btn" aria-label="My Orders" style="text-decoration:none; display:flex; align-items:center; gap: 6px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </a>
+      <button class="navbar__action-btn" id="nav-cart" aria-label="Shopping cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        <span class="cart-badge" id="cart-count"></span>
+      </button>
+      <a href="/admin/index.html" target="_blank" class="navbar__action-btn" aria-label="Admin Dashboard" title="Admin Login" style="color: var(--accent);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════
+       CATEGORY BAR
+       ════════════════════════════════════════════════════════ -->
+  <div class="catbar" id="catbar">
+    <button class="catbar__pill active" data-category="all" id="cat-all">All Products</button>
+    <button class="catbar__pill" data-category="streaming" id="cat-streaming">Streaming</button>
+    <button class="catbar__pill" data-category="gaming" id="cat-gaming">Gaming</button>
+    <button class="catbar__pill" data-category="social" id="cat-social">Social</button>
+    <button class="catbar__pill" data-category="utility" id="cat-utility">Utility</button>
+  </div>
+
+  <main>
+    <div id="home-view">
+      
+      <!-- HERO CINEMATIC INTRO -->
+      <section class="hero-cinematic" id="hero-cinematic">
+        <div class="hero-cinematic__bg"></div>
+        <div class="hero-cinematic__orbit" id="hero-orbit">
+          <!-- Icons injected by JS -->
+        </div>
+        <div class="hero-cinematic__content">
+          <div class="hero-cinematic__glow" id="hero-glow"></div>
+          <h1 class="hero-cinematic__brand" id="hero-brand">
+            <span class="hero-cinematic__brand-text" id="hero-brand-text">
+              <span>B</span><span>O</span><span>N</span><span>D</span><span>E</span><span>D</span>
+            </span>
+            <span class="hero-cinematic__brand-dot"></span>
+          </h1>
+          <p class="hero-cinematic__tagline" id="hero-tagline">Premium digital products.<br>Instantly delivered.</p>
+          <a href="#/products" class="btn--primary-large magnetic-btn" id="hero-cta">Browse Store</a>
+        </div>
+      </section>
+
+      <!-- TRUST STRIP -->
+      <section class="trust-strip">
+        <div class="trust-strip__inner">
+          <div class="trust-strip__item">
+            <div class="trust-strip__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span class="trust-strip__text">Instant Delivery</span>
+          </div>
+          <div class="trust-strip__item">
+            <div class="trust-strip__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <span class="trust-strip__text">Secure bKash</span>
+          </div>
+          <div class="trust-strip__item">
+            <div class="trust-strip__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <span class="trust-strip__text">24/7 Support</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- STORE (Sidebar + Product Grid) -->
+      <section class="store" id="products">
+
+        <!-- Mobile sidebar toggle -->
+        <button class="sidebar__toggle" id="sidebar-toggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/></svg>
+          Filters
+        </button>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar__section">
+            <h3 class="sidebar__title">Category</h3>
+            <label class="sidebar__checkbox"><input type="checkbox" value="streaming"> Streaming <span class="sidebar__count" id="count-streaming"></span></label>
+            <label class="sidebar__checkbox"><input type="checkbox" value="gaming"> Gaming <span class="sidebar__count" id="count-gaming"></span></label>
+            <label class="sidebar__checkbox"><input type="checkbox" value="social"> Social <span class="sidebar__count" id="count-social"></span></label>
+            <label class="sidebar__checkbox"><input type="checkbox" value="utility"> Utility <span class="sidebar__count" id="count-utility"></span></label>
+          </div>
+          <div class="sidebar__section">
+            <h3 class="sidebar__title">Sort By</h3>
+            <select class="sidebar__select" id="sort-select">
+              <option value="popular">Most Popular</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="newest">Newest First</option>
+            </select>
+          </div>
+        </aside>
+
+        <!-- Product Listing -->
+        <div class="listing">
+          <div class="listing__header">
+            <p class="listing__count" id="listing-count"></p>
+          </div>
+          <div class="product-grid" id="product-grid" aria-label="Product listings">
+            <!-- Cards injected by main.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════
+           WHY CHOOSE US (SCROLL SEQUENCE)
+           ════════════════════════════════════════════════════════ -->
+      <div class="scroll-sequence-wrapper" id="bento-scroll-wrapper">
+        <section class="bento-section">
+          <div class="bento-header">
+            <h2 class="bento-title">Why Choose Bonded</h2>
+            <p class="bento-subtitle">Premium service, instant delivery, zero hassle.</p>
+          </div>
+          
+          <div class="bento-layout">
+            <!-- Left: Progress Track -->
+            <div class="bento-progress-col">
+              <div class="bento-progress-track">
+                <div class="bento-progress-fill" id="bento-progress-fill"></div>
+                <div class="bento-progress-dot" id="bento-progress-dot"></div>
+              </div>
+            </div>
+
+            <!-- Right: Stacked Cards -->
+            <div class="bento-cards-stack">
+              <!-- Card 1 -->
+              <div class="bento-card bento-card--stacked" id="bento-card-1">
+                <div class="bento-card__content">
+                  <h3 class="bento-card__title">Instant Delivery</h3>
+                  <p class="bento-card__desc">Your order is delivered immediately after payment confirmation.</p>
+                  <div class="bento-mock-ui">
+                    <div class="bento-notification">
+                      <div class="bento-notification-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                      </div>
+                      <div class="bento-notification-text">
+                        <strong>Order Complete</strong>
+                        <span>Status: Delivered</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Card 2 -->
+              <div class="bento-card bento-card--stacked" id="bento-card-2">
+                <div class="bento-card__content bento-card__content--center">
+                  <h3 class="bento-card__title bento-card__title--large">500+</h3>
+                  <p class="bento-card__desc">Verified Orders Delivered</p>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="bento-card bento-card--stacked" id="bento-card-3">
+                <div class="bento-card__content bento-card__content--center">
+                  <div class="bento-card__icon-row">
+                    <div class="bento-card__icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="bento-card__icon bento-card__icon--pulse">
+                      <div class="pulse-dot"></div>
+                    </div>
+                  </div>
+                  <h3 class="bento-card__title">Secure & Supported</h3>
+                  <p class="bento-card__desc">Mobile pay integration with 24/7 live assistance.</p>
+                </div>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="bento-card bento-card--stacked" id="bento-card-4">
+                <div class="bento-card__content bento-card__content--center">
+                  <div class="bento-stars">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  </div>
+                  <h3 class="bento-card__title">4.8/5 Rating</h3>
+                  <p class="bento-card__desc">From satisfied customers</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ════════════════════════════════════════════════════════
+           TESTIMONIALS (WALL OF LOVE)
+           ════════════════════════════════════════════════════════ -->
+      <section class="testimonials-section">
+        <div class="community-header testimonials-header">
+          <h2 class="community-title testimonials-title">Loved by Thousands</h2>
+          <p class="community-subtitle testimonials-subtitle">Don't just take our word for it. See what our community has to say.</p>
+        </div>
+        
+        <div class="marquee-container">
+          <div class="marquee-track">
+            <!-- First set -->
+            <div class="marquee-content">
+              <div class="testimonial-card">
+                <div class="review-item__stars" style="margin-bottom: 8px;">
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testimonial-card__text">"Delivery was literally instant. I bought Netflix and the code was in my dashboard before I even blinked. Insane service!"</p>
+                <div class="review-item__author-info">
+                  <div class="review-item__avatar" style="background: linear-gradient(135deg, #FF4B2B, #FF416C);">S</div>
+                  <div>
+                    <span class="review-item__name">Sarah M.</span>
+                    <span class="review-item__date">Verified Buyer</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="testimonial-card">
+                <div class="review-item__stars" style="margin-bottom: 8px;">
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testimonial-card__text">"Best marketplace in BD for digital goods. bKash payment is so smooth, and their Discord support replied in 2 mins."</p>
+                <div class="review-item__author-info">
+                  <div class="review-item__avatar" style="background: linear-gradient(135deg, #00B4DB, #0083B0);">T</div>
+                  <div>
+                    <span class="review-item__name">Tahsin R.</span>
+                    <span class="review-item__date">Verified Buyer</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="review-item__stars" style="margin-bottom: 8px;">
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testimonial-card__text">"I buy Xbox Game Pass codes here every month. Never had a single issue. The new UI is absolutely beautiful by the way!"</p>
+                <div class="review-item__author-info">
+                  <div class="review-item__avatar" style="background: linear-gradient(135deg, #11998e, #38ef7d);">F</div>
+                  <div>
+                    <span class="review-item__name">Fahim K.</span>
+                    <span class="review-item__date">Verified Buyer</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="testimonial-card">
+                <div class="review-item__stars" style="margin-bottom: 8px;">
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testimonial-card__text">"Premium quality products and the cheapest prices I've seen. Honestly nothing else comes close to Bonded Store."</p>
+                <div class="review-item__author-info">
+                  <div class="review-item__avatar" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0);">N</div>
+                  <div>
+                    <span class="review-item__name">Nafisa Y.</span>
+                    <span class="review-item__date">Verified Buyer</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Duplicated for seamless loop -->
+            <div class="marquee-content" aria-hidden="true">
+              <div class="testimonial-card">
+                <div class="review-item__stars" style="margin-bottom: 8px;">
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testimonial-card__text">"Delivery was literally instant. I bought Netflix and the code was in my dashboard before I even blinked. Insane service!"</p>
+                <div class="review-item__author-info">
+                  <div class="review-item__avatar" style="background: linear-gradient(135deg, #FF4B2B, #FF416C);">S</div>
+                  <div>
+                    <span class="review-item__name">Sarah M.</span>
+                    <span class="review-item__date">Verified Buyer</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="testimonial-card">
+                <div class="review-item__stars" style="margin-bottom: 8px;">
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testimonial-card__text">"Best marketplace in BD for digital goods. bKash payment is so smooth, and their Discord support replied in 2 mins."</p>
+                <div class="review-item__author-info">
+                  <div class="review-item__avatar" style="background: linear-gradient(135deg, #00B4DB, #0083B0);">T</div>
+                  <div>
+                    <span class="review-item__name">Tahsin R.</span>
+                    <span class="review-item__date">Verified Buyer</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="review-item__stars" style="margin-bottom: 8px;">
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testimonial-card__text">"I buy Xbox Game Pass codes here every month. Never had a single issue. The new UI is absolutely beautiful by the way!"</p>
+                <div class="review-item__author-info">
+                  <div class="review-item__avatar" style="background: linear-gradient(135deg, #11998e, #38ef7d);">F</div>
+                  <div>
+                    <span class="review-item__name">Fahim K.</span>
+                    <span class="review-item__date">Verified Buyer</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="testimonial-card">
+                <div class="review-item__stars" style="margin-bottom: 8px;">
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg viewBox="0 0 24 24" fill="#ffc107"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testimonial-card__text">"Premium quality products and the cheapest prices I've seen. Honestly nothing else comes close to Bonded Store."</p>
+                <div class="review-item__author-info">
+                  <div class="review-item__avatar" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0);">N</div>
+                  <div>
+                    <span class="review-item__name">Nafisa Y.</span>
+                    <span class="review-item__date">Verified Buyer</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════
+           COMMUNITY / DISCORD SECTION
+           ════════════════════════════════════════════════════════ -->
+      <section class="community-section">
+        <div class="community-header">
+          <h2 class="community-title">Meet Us on Discord</h2>
+          <p class="community-subtitle">Join our active community for 24/7 support, giveaways, and announcements.</p>
+        </div>
+        <div class="community-grid">
+          <!-- Community Server -->
+          <a href="#" class="community-card magic-ui-card">
+            <div class="magic-ui-glow"></div>
+            <div class="community-card__content">
+              <div class="community-card__icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+              </div>
+              <h3 class="community-card__title">Bonded Community</h3>
+              <p class="community-card__desc">A community for everyone. Connect with other members, get instant support, and join our weekly giveaways.</p>
+              <span class="community-card__btn">Join Server &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Store Server -->
+          <a href="#" class="community-card magic-ui-card">
+            <div class="magic-ui-glow"></div>
+            <div class="community-card__content">
+              <div class="community-card__icon" style="color: #00e5ff;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l10 6.5v7L12 22l-10-6.5v-7L12 2z"/></svg>
+              </div>
+              <h3 class="community-card__title">Bonded Store</h3>
+              <p class="community-card__desc">The official store server for our customers. Open tickets and talk directly with our dealers for seamless delivery.</p>
+              <span class="community-card__btn" style="color: #00e5ff;">View Store &rarr;</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Developer Quote -->
+      <section class="developer-quote-section">
+        <div class="developer-quote-content">
+          <h2 class="quote-text"><span id="typing-quote"></span><span class="typing-cursor">|</span></h2>
+          <p class="quote-author">- Faysal Ahmed <span class="quote-sub">(the developer of the site)</span></p>
+        </div>
+      </section>
+
+    </div> <!-- /home-view -->
+
+    <!-- ════════════════════════════════════════════════════════
+         PRODUCT DETAIL VIEW (SPA)
+         ════════════════════════════════════════════════════════ -->
+    <section id="product-detail-view" style="display: none;">
+      <div class="product-detail">
+        <div class="product-detail__back">
+          <a href="#" class="btn-back" id="btn-back-home">← Back to Store</a>
+        </div>
+        
+        <div class="product-detail__grid">
+          <!-- Left: Image/Icon -->
+          <div class="product-detail__image-box" id="pd-image-box">
+            <div class="product-detail__icon" id="pd-icon"></div>
+            <span class="product-card__badge" id="pd-badge"></span>
+          </div>
+
+          <!-- Right: Info & Actions -->
+          <div class="product-detail__info">
+            <h1 class="product-detail__title" id="pd-title">Product Name</h1>
+            
+            <div class="product-detail__rating-row">
+              <div class="product-card__stars" id="pd-stars"></div>
+              <span class="product-card__rating-num" id="pd-rating-num"></span>
+              <span class="product-detail__reviews-link">(128 Reviews)</span>
+            </div>
+            
+            <div class="product-detail__price-row">
+              <span class="product-detail__price" id="pd-price"><span class="currency">৳</span>0</span>
+              <span class="product-detail__stock" id="pd-stock">In Stock</span>
+            </div>
+            
+            <p class="product-detail__desc" id="pd-desc">Product description goes here.</p>
+            
+            <div class="product-detail__actions">
+              <div class="quantity-selector">
+                <button class="qty-btn" id="pd-qty-minus">−</button>
+                <input type="number" class="qty-input" id="pd-qty-input" value="1" min="1" max="10">
+                <button class="qty-btn" id="pd-qty-plus">+</button>
+              </div>
+              <button class="btn-add-cart btn--primary-large" id="pd-add-cart">Add to Cart</button>
+            </div>
+            <button class="btn--secondary btn--full-width" id="pd-buy-now">Buy Now</button>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="product-detail__tabs">
+          <div class="pd-tabs-header">
+            <button class="pd-tab-btn active" data-tab="details">Details & Terms</button>
+            <button class="pd-tab-btn" data-tab="reviews">Reviews</button>
+          </div>
+          <div class="pd-tab-content active" id="tab-details">
+            <ul>
+              <li><strong>Delivery:</strong> Instant delivery via email & account dashboard.</li>
+              <li><strong>Validity:</strong> Order must be redeemed within 30 days.</li>
+              <li><strong>Region:</strong> Global / US (Region specified on activation).</li>
+              <li><strong>Refund Policy:</strong> No refunds for digital orders once revealed.</li>
+            </ul>
+          </div>
+          <div class="pd-tab-content" id="tab-reviews">
+            <div class="reviews-section">
+              <!-- Review List Container -->
+              <div id="pd-reviews-list" class="reviews-list">
+                <!-- Reviews injected by JS -->
+              </div>
+
+              <!-- Add Review Form -->
+              <div class="review-form-container">
+                <h4 class="review-form-title">Write a Review</h4>
+                <form id="pd-review-form" class="review-form">
+                  <div class="form-group">
+                    <label class="form-label">Your Rating</label>
+                    <div class="star-rating-input" id="review-rating-input">
+                      <!-- 5 Stars for interaction -->
+                      <svg data-rating="1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      <svg data-rating="2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      <svg data-rating="3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      <svg data-rating="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      <svg data-rating="5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="form-label" for="review-name">Name</label>
+                    <input type="text" id="review-name" class="form-input" placeholder="Your name" required>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="form-label" for="review-text">Review</label>
+                    <textarea id="review-text" class="form-input form-textarea" placeholder="What did you think about this product?" required rows="3"></textarea>
+                  </div>
+                  
+                  <button type="submit" class="btn--primary-large btn--full-width" style="margin-top: 16px;">Post Review</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="related-products">
+          <h3 class="related-products__title">You might also like</h3>
+          <div class="product-grid" id="related-product-grid">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         CHECKOUT VIEW (SPA)
+         ════════════════════════════════════════════════════════ -->
+    <section id="checkout-view" style="display: none;">
+      <div class="checkout-layout">
+        <div class="checkout-form-area">
+          <h1 class="checkout-title">Checkout</h1>
+          
+          <div class="checkout-section">
+            <h2 class="checkout-section__title">1. Contact Info</h2>
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" id="co-name" class="form-input" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Gmail Address <span style="color: var(--accent-light); font-size: 0.8rem;">(Order confirmation will be sent here)</span></label>
+              <input type="email" id="co-email" class="form-input" placeholder="e.g. yourname@gmail.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number (for delivery contact)</label>
+              <input type="text" id="co-contact" class="form-input" placeholder="e.g. 017...">
+            </div>
+          </div>
+
+          <div class="checkout-section">
+            <h2 class="checkout-section__title">2. Payment Method</h2>
+            <div class="payment-methods">
+              <div class="payment-card active" data-method="bkash">
+                <div class="payment-card__icon" id="icon-bkash"></div>
+                <span>bKash</span>
+              </div>
+              <div class="payment-card" data-method="nagad">
+                <div class="payment-card__icon" id="icon-nagad"></div>
+                <span>Nagad</span>
+              </div>
+              <div class="payment-card" data-method="rocket">
+                <div class="payment-card__icon" id="icon-rocket"></div>
+                <span>Rocket</span>
+              </div>
+            </div>
+
+            <div class="payment-instructions" id="payment-instructions">
+              <p>Send <strong id="co-amount-text" class="text-accent">৳0</strong> to bKash Personal number: <strong class="text-white">01855641374</strong> and enter the Transaction ID below.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Sender Number</label>
+              <input type="text" id="co-sender" class="form-input" placeholder="e.g. 017...">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Transaction ID (TrxID)</label>
+              <input type="text" id="co-trxid" class="form-input" placeholder="e.g. 9J4A9F2K">
+            </div>
+          </div>
+        </div>
+
+        <div class="checkout-summary-area">
+          <div class="order-summary-box">
+            <h2 class="summary-box__title">Order Summary</h2>
+            <div class="summary-items" id="co-items">
+              <!-- Injected by JS -->
+            </div>
+            <div class="summary-totals">
+              <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="co-subtotal">৳0</span>
+              </div>
+              <div class="summary-row summary-total-large">
+                <span>Total</span>
+                <span id="co-total">৳0</span>
+              </div>
+            </div>
+            <button class="btn--primary-large btn-place-order" id="btn-place-order">Place Order</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         ORDER CONFIRMATION VIEW (SPA)
+         ════════════════════════════════════════════════════════ -->
+    <section id="order-view" style="display: none;">
+      <div class="order-confirmation">
+        <div class="order-header">
+          <!-- Animated Checkmark -->
+          <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+          </svg>
+          <div class="badge badge-delivered">Order Confirmed</div>
+          <h2 class="order-id">ID: <span id="ov-id" class="text-accent"></span></h2>
+          <p class="order-date" id="ov-date"></p>
+          <div class="order-status badge-pending" id="ov-status">Pending Verification</div>
+
+          <!-- Email reminder banner -->
+          <div id="ov-email-banner" style="margin-top: 20px; background: linear-gradient(135deg, rgba(0,200,255,0.08), rgba(0,102,255,0.08)); border: 1px solid rgba(0,200,255,0.25); border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 12px; text-align: left;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00c8ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <div>
+              <p style="margin:0; color:#cdd6f4; font-size:0.9rem; font-weight:600;">📬 Check your email for your Order ID!</p>
+              <p style="margin:4px 0 0; color:#8892a4; font-size:0.8rem; line-height:1.5;">A confirmation email with your tracking ID has been sent. <strong style="color:#ff4757;">Don't lose it</strong> — you'll need it to track your order.</p>
+            </div>
+          </div>
+          
+          <a href="#ov-chat-section" class="chat-scroll-prompt" id="chat-scroll-prompt" style="display:none;">
+            <span class="pulse-dot"></span> 👇 Need help or want to send details? <strong>Scroll down to chat with support</strong>
+          </a>
+        </div>
+
+        <div class="order-notice" id="ov-notice">
+          We're verifying your payment. This usually takes under 30 minutes.
+        </div>
+
+        <!-- Hidden by default, shown if Delivered -->
+        <div class="order-codes-section" id="ov-codes-section" style="display: none;">
+          <h2 class="section-title">Your Orders</h2>
+          <div id="ov-codes-list">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <div class="order-details-grid">
+          <div class="order-section box-panel">
+            <h2 class="section-title">Items Ordered</h2>
+            <div class="order-items-list" id="ov-items">
+              <!-- Injected by JS -->
+            </div>
+            <div class="order-total-row">
+              <span>Total</span>
+              <span id="ov-total" class="text-accent">৳0</span>
+            </div>
+          </div>
+
+          <div class="order-section box-panel">
+            <h2 class="section-title">Payment Info</h2>
+            <ul class="payment-info-list">
+              <li><span class="label">Method:</span> <span id="ov-pay-method">---</span></li>
+              <li><span class="label">Sender:</span> <span id="ov-pay-sender">---</span></li>
+              <li><span class="label">TrxID:</span> <span id="ov-pay-trx">---</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="order-support">
+          <p>Need help? <a href="#" class="text-accent">Contact Support on Discord</a></p>
+        </div>
+
+        <!-- Chat Section (Visible when Pending or Verified) -->
+        <div class="chat-section box-panel" id="ov-chat-section" style="display: none; margin-top: 24px;">
+          <h2 class="section-title">Chat with Support</h2>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">
+            <strong>Important:</strong> Please use this chat to send your delivery details (such as account usernames, emails, or player IDs) so our dealer can fulfill your order. We will deliver your product using the information you provide here!
+          </p>
+          <div class="chat-container">
+            <div class="chat-messages" id="ov-chat-messages">
+              <!-- Messages injected via JS -->
+            </div>
+            
+            <div class="chat-input-area">
+              <input type="file" id="chat-image-input" accept="image/*" style="display: none;">
+              <button class="chat-attach-btn" id="btn-chat-attach" title="Attach Image">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+              </button>
+              
+              <div class="chat-input-wrapper">
+                <div id="chat-image-preview" class="chat-image-preview" style="display: none;">
+                  <img id="chat-preview-img" src="" alt="preview">
+                  <button class="chat-preview-remove" id="btn-chat-preview-remove">&times;</button>
+                </div>
+                <input type="text" id="chat-text-input" placeholder="Type a message..." class="chat-input">
+              </div>
+              
+              <button class="btn--primary" id="btn-chat-send" style="padding: 0 16px;">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         MY ORDERS VIEW (SPA)
+         ════════════════════════════════════════════════════════ -->
+    <section id="my-orders-view" style="display: none;">
+      <div style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
+        <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 8px;">My Orders</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 32px;">Your recent orders from this device.</p>
+        
+        <div id="my-orders-list" style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px;">
+          <!-- Orders injected here via JS -->
+        </div>
+
+        <div style="padding: 32px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); text-align: center;">
+          <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 12px;">Missing an order?</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 0.95rem;">If you ordered on another device, you can track it manually using the ID from your email.</p>
+          
+          <div style="display: flex; gap: 12px; max-width: 400px; margin: 0 auto;">
+            <input type="text" id="track-order-id" class="form-input" placeholder="e.g. ORD-9J4A9F" style="flex: 1;">
+            <button id="btn-track-order" class="btn--primary" style="width: auto; padding: 0 24px;">Track</button>
+          </div>
+          <p id="track-error" class="text-danger" style="display: none; margin-top: 16px; font-size: 0.9rem;">Order not found. Please check your ID.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════
+       FOOTER (Multi-Column)
+       ════════════════════════════════════════════════════════ -->
+  <footer class="footer" id="footer">
+    <div class="footer__main">
+      <!-- Column 1: About -->
+      <div>
+        <a href="#" class="heading-brand footer__brand">Bonded</a>
+        <p class="footer__about-text">
+          Premium digital products for streaming, gaming, and productivity.
+          Every order is verified and delivered instantly via bKash.
+        </p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Discord" id="social-discord">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+          </a>
+          <a href="#" class="footer__social" aria-label="X (Twitter)" id="social-twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" class="footer__social" aria-label="Instagram" id="social-instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2: Support -->
+      <div>
+        <h4 class="footer__col-title">Support</h4>
+        <a href="#" class="footer__link" id="footer-faq">FAQ</a>
+        <a href="#" class="footer__link" id="footer-contact">Contact Us</a>
+        <a href="#" class="footer__link" id="footer-discord-link">Discord Server</a>
+        <a href="#" class="footer__link" id="footer-terms">Terms of Service</a>
+        <a href="#" class="footer__link" id="footer-privacy">Privacy Policy</a>
+      </div>
+
+      <!-- Column 3: Categories -->
+      <div>
+        <h4 class="footer__col-title">Categories</h4>
+        <a href="#" class="footer__link" id="footer-streaming">Streaming</a>
+        <a href="#" class="footer__link" id="footer-gaming">Gaming</a>
+        <a href="#" class="footer__link" id="footer-social-cat">Social</a>
+        <a href="#" class="footer__link" id="footer-utility">Utility</a>
+        <a href="#" class="footer__link" id="footer-all">All Products</a>
+      </div>
+
+      <!-- Column 4: Connect -->
+      <div>
+        <h4 class="footer__col-title">Stay Connected</h4>
+        <p class="footer__about-text" style="margin-top:0;">
+          Join our Discord community for updates, deals, and instant support.
+        </p>
+        <a href="#" class="footer__link" id="footer-join" style="color: var(--accent-light); font-weight: 500;">Join Discord →</a>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; 2026 Bonded. All rights reserved.</p>
+      <div class="footer__payments">
+        <span class="footer__payment-badge">bKash</span>
+        <span class="footer__payment-badge">Nagad</span>
+        <span class="footer__payment-badge">Rocket</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+  <script type="module" src="js/hero-animation.js"></script>
+  <script type="module" src="js/scroll-sequence.js"></script>
+  <script type="module" src="js/cursor.js"></script>
+
+  <!-- ════════════════════════════════════════════════════════
+       CART DRAWER
+       ════════════════════════════════════════════════════════ -->
+  <div class="cart-drawer-overlay" id="cart-overlay" aria-hidden="true"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-hidden="true">
+    <div class="cart-drawer__header">
+      <h2 class="cart-drawer__title">Your Cart</h2>
+      <button class="cart-drawer__close" id="cart-close" aria-label="Close cart">×</button>
+    </div>
+    <div class="cart-drawer__body">
+      <div id="cart-active-orders" style="display: none; margin-bottom: 20px;"></div>
+      <div class="cart-drawer__content" id="cart-content">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+
+    <div class="cart-drawer__empty" id="cart-empty" style="display: none;">
+      <div class="cart-empty__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      </div>
+      <p>Your cart is empty</p>
+      <button class="btn--secondary" id="cart-continue-btn">Browse Products</button>
+    </div>
+
+    <div class="cart-drawer__footer" id="cart-footer">
+      <div class="cart-drawer__promo">
+        <input type="text" placeholder="Promo Code" class="cart-promo-input">
+        <button class="btn--secondary btn--small">Apply</button>
+      </div>
+      <div class="cart-drawer__summary">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">৳0</span>
+        </div>
+        <div class="summary-row summary-total">
+          <span>Total</span>
+          <span id="cart-total">৳0</span>
+        </div>
+      </div>
+      <button class="btn-checkout btn--primary-large">Proceed to Checkout</button>
+    </div>
+  </aside>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container" class="toast-container"></div>
+
+</body>
+</html>

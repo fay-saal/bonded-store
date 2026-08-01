@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — BONDED Store</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../css/styles.css"> <!-- Share base tokens -->
+  <link rel="stylesheet" href="../css/admin.css"> <!-- Admin specific overrides -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-body">
+
+  <!-- LOGIN GATE -->
+  <div id="login-gate" class="login-gate">
+    <div class="login-box">
+      <h1 class="heading-brand text-center mb-4">Bonded Admin</h1>
+      <input type="password" id="admin-password" class="form-input mb-3" placeholder="Enter Admin Password">
+      <button id="btn-login" class="btn--primary-large">Login</button>
+      <p id="login-error" class="text-danger mt-2" style="display: none; text-align:center;">Incorrect password.</p>
+    </div>
+  </div>
+
+  <!-- MAIN DASHBOARD (Hidden until logged in) -->
+  <div id="admin-app" class="admin-app" style="display: none;">
+    <!-- Topbar -->
+    <header class="admin-topbar">
+      <div class="heading-brand">Bonded Admin</div>
+      <div>
+        <button class="btn--secondary btn--small" id="btn-logout">Logout</button>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      
+      <!-- TABS NAV -->
+      <nav class="admin-tabs">
+        <button class="admin-tab active" data-target="view-overview">Overview</button>
+        <button class="admin-tab" data-target="view-orders">Orders</button>
+        <button class="admin-tab" data-target="view-products">Products</button>
+        <button class="admin-tab" data-target="view-messages">Messages <span id="admin-msg-badge" class="badge-danger" style="display:none; margin-left:4px; padding:2px 6px; border-radius:10px; font-size:10px;">0</span></button>
+      </nav>
+
+      <!-- VIEW: OVERVIEW -->
+      <div id="view-overview" class="admin-view active">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Revenue (Today)</div>
+            <div class="stat-value" id="stat-rev-today">৳0</div>
+            <div class="stat-subtext text-green">+5.2% vs yesterday</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Orders (Today)</div>
+            <div class="stat-value" id="stat-orders-today">0</div>
+          </div>
+          <div class="stat-card stat-card--warning">
+            <div class="stat-label">Pending Verifications</div>
+            <div class="stat-value" id="stat-pending">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Revenue (Month)</div>
+            <div class="stat-value" id="stat-rev-month">৳0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Products</div>
+            <div class="stat-value" id="stat-total-products">0</div>
+            <div class="stat-subtext text-danger" id="stat-out-of-stock">0 out of stock</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Average Order Value</div>
+            <div class="stat-value" id="stat-aov">৳0</div>
+          </div>
+        </div>
+
+        <!-- Middle Section -->
+        <div class="admin-grid-2">
+          <!-- Chart -->
+          <div class="admin-panel">
+            <h3 class="panel-title">Orders (Last 7 Days)</h3>
+            <canvas id="ordersChart" width="400" height="200"></canvas>
+          </div>
+          
+          <div class="admin-grid-inner">
+            <!-- Recent Orders -->
+            <div class="admin-panel">
+              <h3 class="panel-title">Recent Orders</h3>
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-orders-tbody">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+            
+            <!-- Low Stock Alerts -->
+            <div class="admin-panel border-warning">
+              <h3 class="panel-title text-warning">Low Stock Alerts</h3>
+              <ul class="stock-alert-list" id="stock-alert-list">
+                <!-- Injected via JS -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW: ORDERS -->
+      <div id="view-orders" class="admin-view" style="display: none;">
+        <div class="admin-panel">
+          <div class="panel-header">
+            <h3 class="panel-title">Manage Orders</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Customer</th>
+                  <th>Payment (TrxID)</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="orders-tbody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW: PRODUCTS -->
+      <div id="view-products" class="admin-view" style="display: none;">
+        <div class="admin-panel">
+          <div class="panel-header" style="display:flex; justify-content:space-between;">
+            <h3 class="panel-title">Manage Products</h3>
+            <button class="btn--primary btn--small" id="btn-add-product">Add Product</button>
+          </div>
+          
+          <!-- Add Product Form (Hidden) -->
+          <div id="add-product-form" class="form-panel" style="display: none; margin-bottom: 24px; padding: 24px; border: 1px solid var(--border); border-radius: 8px; background: rgba(0,0,0,0.2);">
+            <h4 style="margin-bottom:16px;">Add New Product</h4>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+              <div>
+                <label class="form-label">Name</label>
+                <input type="text" id="add-p-name" class="form-input">
+              </div>
+              <div>
+                <label class="form-label">Category</label>
+                <select id="add-p-cat" class="form-input">
+                  <option value="streaming">Streaming</option>
+                  <option value="gaming">Gaming</option>
+                  <option value="social">Social</option>
+                  <option value="utility">Utility</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Price (BDT)</label>
+                <input type="number" id="add-p-price" class="form-input">
+              </div>
+              <div>
+                <label class="form-label">Description</label>
+                <input type="text" id="add-p-desc" class="form-input">
+              </div>
+            </div>
+            <div style="margin-top:16px; display:flex; gap:12px;">
+              <button class="btn--primary btn--small" id="btn-save-product">Save Product</button>
+              <button class="btn--secondary btn--small" id="btn-cancel-product">Cancel</button>
+            </div>
+          </div>
+
+          <!-- Edit Product Form (Hidden) -->
+          <div id="edit-product-form" class="form-panel" style="display: none; margin-bottom: 24px; padding: 24px; border: 1px solid var(--accent); border-radius: 8px; background: rgba(45, 79, 255, 0.05);">
+            <h4 style="margin-bottom:16px;">Edit Product</h4>
+            <input type="hidden" id="edit-p-id">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+              <div>
+                <label class="form-label">Name</label>
+                <input type="text" id="edit-p-name" class="form-input">
+              </div>
+              <div>
+                <label class="form-label">Category</label>
+                <select id="edit-p-cat" class="form-input">
+                  <option value="streaming">Streaming</option>
+                  <option value="gaming">Gaming</option>
+                  <option value="social">Social</option>
+                  <option value="utility">Utility</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Price (BDT)</label>
+                <input type="number" id="edit-p-price" class="form-input">
+              </div>
+              <div>
+                <label class="form-label">Description</label>
+                <input type="text" id="edit-p-desc" class="form-input">
+              </div>
+              <div style="grid-column: 1 / -1;">
+                <label class="form-label">Product Image (Replace SVG Icon)</label>
+                <input type="file" id="edit-p-image" accept="image/*" class="form-input" style="padding: 8px;">
+                <p class="text-secondary" style="font-size: 0.8rem; margin-top: 4px;">Upload an image to override the default SVG icon.</p>
+              </div>
+            </div>
+            <div style="margin-top:16px; display:flex; gap:12px;">
+              <button class="btn--primary btn--small" id="btn-update-product">Update Product</button>
+              <button class="btn--secondary btn--small" id="btn-cancel-edit-product">Cancel</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="products-tbody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+      <!-- VIEW: MESSAGES -->
+      <div id="view-messages" class="admin-view" style="display: none; height: calc(100vh - 140px);">
+        <div class="admin-panel" style="height: 100%; display: flex; flex-direction: row; padding: 0; overflow: hidden;">
+          
+          <!-- Left: Conversation List -->
+          <div style="width: 35%; border-right: 1px solid var(--border); display: flex; flex-direction: column;">
+            <div class="panel-header" style="padding: 16px; border-bottom: 1px solid var(--border);">
+              <h3 class="panel-title">Conversations</h3>
+            </div>
+            <div id="admin-conv-list" style="flex: 1; overflow-y: auto;">
+              <!-- Conversations injected via JS -->
+            </div>
+          </div>
+          
+          <!-- Right: Active Thread -->
+          <div style="width: 65%; display: flex; flex-direction: column; background: rgba(0,0,0,0.2);">
+            
+            <!-- Thread Header -->
+            <div id="admin-chat-header" style="padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h4 style="margin: 0; color: #fff;" id="admin-chat-title">Select a conversation</h4>
+                <p style="margin: 4px 0 0; font-size: 0.8rem; color: var(--text-muted);" id="admin-chat-subtitle"></p>
+              </div>
+              <div id="admin-chat-actions" style="display: none;">
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; cursor: pointer;">
+                  <input type="checkbox" id="admin-resolve-toggle"> Resolved
+                </label>
+              </div>
+            </div>
+
+            <!-- Thread Messages -->
+            <div id="admin-chat-messages" style="flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+              <!-- Messages injected via JS -->
+            </div>
+
+            <!-- Thread Input -->
+            <div id="admin-chat-input-area" style="padding: 16px; border-top: 1px solid var(--border); background: var(--bg-card); display: none; align-items: flex-end; gap: 8px;">
+              <input type="file" id="admin-chat-image" accept="image/*" style="display: none;">
+              <button class="chat-attach-btn" id="btn-admin-chat-attach" title="Attach Image">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+              </button>
+              
+              <div class="chat-input-wrapper" style="flex: 1; background: var(--bg-input); border: 1px solid var(--border); border-radius: 20px; display: flex; flex-direction: column; overflow: hidden;">
+                <div id="admin-chat-preview" class="chat-image-preview" style="display: none;">
+                  <img id="admin-preview-img" src="" alt="preview">
+                  <button class="chat-preview-remove" id="btn-admin-preview-remove">&times;</button>
+                </div>
+                <input type="text" id="admin-chat-text" placeholder="Type your reply..." class="chat-input">
+              </div>
+              
+              <button class="btn--primary" id="btn-admin-chat-send" style="padding: 0 16px;">Send</button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MINI CALCULATOR WIDGET -->
+  <button id="calc-toggle-btn" class="calc-toggle" title="Open Calculator">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="14.01"/><line x1="16" y1="10" x2="16" y2="10.01"/><line x1="16" y1="18" x2="16" y2="18.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="12" y1="10" x2="12" y2="10.01"/><line x1="12" y1="18" x2="12" y2="18.01"/><line x1="8" y1="14" x2="8" y2="14.01"/><line x1="8" y1="10" x2="8" y2="10.01"/><line x1="8" y1="18" x2="8" y2="18.01"/></svg>
+  </button>
+
+  <div id="calc-widget" class="calc-widget" style="display: none;">
+    <div class="calc-header">
+      <span>Calculator</span>
+      <button id="calc-close-btn">&times;</button>
+    </div>
+    <div class="calc-display" id="calc-display">0</div>
+    <div class="calc-keys">
+      <button class="calc-key calc-operator" data-action="clear">AC</button>
+      <button class="calc-key calc-operator" data-action="delete">DEL</button>
+      <button class="calc-key calc-operator" data-action="divide">&divide;</button>
+      <button class="calc-key calc-operator" data-action="multiply">&times;</button>
+      
+      <button class="calc-key" data-number="7">7</button>
+      <button class="calc-key" data-number="8">8</button>
+      <button class="calc-key" data-number="9">9</button>
+      <button class="calc-key calc-operator" data-action="subtract">-</button>
+      
+      <button class="calc-key" data-number="4">4</button>
+      <button class="calc-key" data-number="5">5</button>
+      <button class="calc-key" data-number="6">6</button>
+      <button class="calc-key calc-operator" data-action="add">+</button>
+      
+      <button class="calc-key" data-number="1">1</button>
+      <button class="calc-key" data-number="2">2</button>
+      <button class="calc-key" data-number="3">3</button>
+      <button class="calc-key calc-operator calc-equals" data-action="calculate" style="grid-row: span 2;">=</button>
+      
+      <button class="calc-key" data-number="0" style="grid-column: span 2;">0</button>
+      <button class="calc-key" data-number=".">.</button>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>
