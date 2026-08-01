@@ -69,6 +69,49 @@
 <br>
 
 ---
+### `> setup & deployment tutorial`
+---
+
+Follow these steps exactly to run the platform locally or deploy it to a live server.
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/fay-saal/bonded-store.git
+cd bonded-store
+```
+
+**2. Install Backend Dependencies**
+```bash
+npm install
+```
+
+**3. Configure your Secrets**
+Create a `.env` file in the root directory (where `server.js` is) and paste your credentials:
+```env
+PORT=3000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_super_secret_jwt_key
+ADMIN_PASSWORD=your_admin_dashboard_password
+DISCORD_WEBHOOK_URL=your_discord_webhook
+CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+```
+> **Security Warning:** Never commit your `.env` file! A `.gitignore` is included by default to prevent accidental leaks.
+
+**4. Start the Application Locally**
+```bash
+node server.js
+```
+The console will read `Bonded Bazar Backend running on http://localhost:3000`. You can now view the storefront at `http://localhost:3000` and the admin panel at `http://localhost:3000/admin`.
+
+**5. Deploying to Production (Client Handoff)**
+- **Backend Hosting:** Deploy the entire folder to **Render**, **Railway**, or **Heroku**. Insert your `.env` variables into their dashboard settings.
+- **Frontend Syncing:** The frontend automatically checks if it is running on `localhost`. When you deploy your frontend to **Vercel** or **Netlify**, make sure to open `js/main.js` and `js/admin.js` and change the `API_BASE_URL` at the top of the file to point to your new live backend server (e.g., `https://my-bonded-backend.onrender.com`).
+
+<br>
+
+---
 ### `> license`
 ---
 MIT © 2026 Faysal (DieBack Theatre)
