@@ -366,3 +366,39 @@
   font-size: 0.75rem;
 }
 
+
+
+/* ════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVENESS
+   ════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .admin-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .admin-topbar {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .admin-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+    width: 100%;
+  }
+  .admin-content {
+    padding: 16px;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 500px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .login-box {
+    padding: 24px;
+  }
+}
