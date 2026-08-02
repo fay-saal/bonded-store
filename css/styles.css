@@ -2038,7 +2038,8 @@ main {
 
 .hero-cinematic__brand {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(4rem, 14vw, 12rem);
+  font-size: clamp(2.5rem, 12vw, 12rem);
+  white-space: nowrap;
   font-weight: 900;
   letter-spacing: -3px;
   margin: 0;
