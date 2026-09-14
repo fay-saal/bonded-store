@@ -227,6 +227,12 @@ function updateCartBadge() {
     badge.textContent = totalCount;
     badge.style.display = totalCount > 0 ? 'flex' : 'none';
   }
+  // Also update mobile cart badge
+  const mobileBadge = document.getElementById('cart-count-mobile');
+  if (mobileBadge) {
+    mobileBadge.textContent = totalCount;
+    mobileBadge.style.display = totalCount > 0 ? 'flex' : 'none';
+  }
 }
 
 async function renderCart() {
@@ -330,6 +336,7 @@ async function renderCart() {
 
 function initCartDrawer() {
   const cartBtn = document.getElementById('nav-cart');
+  const cartBtnMobile = document.getElementById('nav-cart-mobile');
   const closeBtn = document.getElementById('cart-close');
   const overlay = document.getElementById('cart-overlay');
   const drawer = document.getElementById('cart-drawer');
@@ -346,6 +353,7 @@ function initCartDrawer() {
   }
 
   cartBtn?.addEventListener('click', openCart);
+  cartBtnMobile?.addEventListener('click', openCart);
   closeBtn?.addEventListener('click', closeCart);
   overlay?.addEventListener('click', closeCart);
   continueBtn?.addEventListener('click', closeCart);
@@ -477,16 +485,27 @@ function initSidebarFilters() {
 // ── Search ────────────────────────────────────────────────────
 function initSearch() {
   const searchInput = document.getElementById('search-input');
-  if (!searchInput) return;
+  const mobileSearchInput = document.getElementById('mobile-search-input');
 
   let debounceTimer;
-  searchInput.addEventListener('input', () => {
+  function handleSearch(value) {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
-      state.searchQuery = searchInput.value.trim();
+      state.searchQuery = value.trim();
       renderProducts();
     }, 200);
-  });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', () => handleSearch(searchInput.value));
+  }
+  if (mobileSearchInput) {
+    mobileSearchInput.addEventListener('input', () => {
+      handleSearch(mobileSearchInput.value);
+      // Sync with desktop search
+      if (searchInput) searchInput.value = mobileSearchInput.value;
+    });
+  }
 }
 
 
@@ -1172,6 +1191,16 @@ function handleRouting() {
   } else if (hash === '#/my-orders') {
     myOrdersView.style.display = 'block';
     renderMyOrdersView();
+  } else if (hash === '#/products') {
+    // "Browse Store" button — show home and scroll to product grid
+    homeView.style.display = 'block';
+    setTimeout(() => {
+      const productsSection = document.getElementById('products');
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+    return; // Skip scrollTo(0,0)
   } else {
     homeView.style.display = 'block';
   }
@@ -1182,16 +1211,25 @@ window.addEventListener('hashchange', handleRouting);
 
 // ── Initialize ────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
-  // Setup Currency Toggle
-  document.getElementById('currency-toggle').addEventListener('change', (e) => {
-    state.currency = e.target.value;
+  // Setup Currency Toggle (desktop)
+  const currencyToggle = document.getElementById('currency-toggle');
+  const mobileCurrencyToggle = document.getElementById('mobile-currency-toggle');
+  
+  function handleCurrencyChange(value) {
+    state.currency = value;
+    // Sync both toggles
+    if (currencyToggle) currencyToggle.value = value;
+    if (mobileCurrencyToggle) mobileCurrencyToggle.value = value;
     // Re-render everything that shows prices
     renderProducts();
     renderCart();
     if (window.location.hash.startsWith('#/product/')) renderProductDetail(window.location.hash.replace('#/product/', ''));
     if (window.location.hash === '#/checkout') renderCheckout();
     if (window.location.hash.startsWith('#/order/')) renderOrder(window.location.hash.replace('#/order/', ''));
-  });
+  }
+  
+  currencyToggle?.addEventListener('change', (e) => handleCurrencyChange(e.target.value));
+  mobileCurrencyToggle?.addEventListener('change', (e) => handleCurrencyChange(e.target.value));
 
   try {
     const res = await fetch(`${API_BASE_URL}/api/products`);
@@ -1214,6 +1252,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateCartBadge();
   renderCart();
   handleRouting();
+
+  // ── Mobile Menu (Hamburger) ──────────────────────────────
+  initMobileMenu();
 });
 
 window.changeQuantity = function(productId, delta) {
@@ -1429,3 +1470,94 @@ document.addEventListener('DOMContentLoaded', () => {
 
   observer.observe(document.querySelector('.developer-quote-section'));
 });
+
+// ── Mobile Menu ──────────────────────────────────────────────
+function initMobileMenu() {
+  const hamburger = document.getElementById('hamburger-btn');
+  const menu = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('mobile-menu-overlay');
+  const mobileCartBtn = document.getElementById('nav-cart-mobile');
+  
+  if (!hamburger || !menu) return;
+
+  let isOpen = false;
+
+  function openMenu() {
+    isOpen = true;
+    menu.style.display = 'flex';
+    overlay?.classList.add('open');
+    // Trigger reflow for animation
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        menu.classList.add('open');
+      });
+    });
+    // Change hamburger to X
+    hamburger.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+  }
+
+  function closeMenu() {
+    isOpen = false;
+    menu.classList.remove('open');
+    overlay?.classList.remove('open');
+    // Restore hamburger icon
+    hamburger.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
+    // Hide after animation
+    setTimeout(() => {
+      if (!isOpen) menu.style.display = 'none';
+    }, 350);
+  }
+
+  hamburger.addEventListener('click', () => {
+    if (isOpen) closeMenu(); else openMenu();
+  });
+
+  overlay?.addEventListener('click', closeMenu);
+
+  // Category links in mobile menu
+  document.querySelectorAll('[data-mobile-cat]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const cat = link.getAttribute('data-mobile-cat');
+      
+      // Activate the catbar pill
+      state.activeCategory = cat;
+      state.checkedCategories = [];
+      document.querySelectorAll('.catbar__pill').forEach(pill => {
+        pill.classList.toggle('active', pill.getAttribute('data-category') === cat);
+      });
+      
+      // Show home view if not already
+      if (window.location.hash !== '' && window.location.hash !== '#') {
+        window.location.hash = '';
+      }
+      
+      renderProducts();
+      closeMenu();
+      
+      // Scroll to products section
+      setTimeout(() => {
+        const productsSection = document.getElementById('products');
+        if (productsSection) {
+          productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    });
+  });
+
+  // Close menu on link navigation
+  menu.querySelectorAll('a[href]').forEach(link => {
+    if (!link.hasAttribute('data-mobile-cat')) {
+      link.addEventListener('click', closeMenu);
+    }
+  });
+
+  // Show mobile cart button on mobile viewports
+  function updateMobileCartVisibility() {
+    if (mobileCartBtn) {
+      mobileCartBtn.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+    }
+  }
+  updateMobileCartVisibility();
+  window.addEventListener('resize', updateMobileCartVisibility);
+}
