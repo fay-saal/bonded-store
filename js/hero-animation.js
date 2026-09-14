@@ -134,7 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
       allTextElements.forEach(l => {
         l.style.opacity = '0';
         l.style.transform = 'translateY(40px) scale(0.8)';
-        l.style.filter = 'blur(10px)';
       });
 
       animate(
@@ -142,8 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { 
           y: [40, 0], 
           scale: [0.8, 1.1, 1],
-          opacity: [0, 1],
-          filter: ["blur(10px)", "blur(0px)"]
+          opacity: [0, 1]
         },
         { 
           duration: 1.0, 

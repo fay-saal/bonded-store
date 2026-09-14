@@ -469,6 +469,13 @@
     gap: 12px;
     align-items: flex-start !important;
   }
+  
+  /* Tabs: allow horizontal scroll */
+  .admin-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
 
   /* Chat input in admin */
   #admin-chat-input-area {
