@@ -2413,7 +2413,7 @@ main {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 24px;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   opacity: 0; /* JS will animate */

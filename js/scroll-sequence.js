@@ -52,11 +52,19 @@ export function initScrollSequence() {
   scroll((rawProgress) => {
     const progress = Math.max(0, Math.min(1, rawProgress)); // clamp 0-1
 
-    // 1. Update progress line and dot
-    progressFill.style.height = `${progress * 100}%`;
-    progressFill.style.width = '100%';
-    progressDot.style.top = `${progress * 100}%`;
-    progressDot.style.left = '50%';
+    // 1. Update progress line and dot based on horizontal (tablet) or vertical (desktop) CSS layout
+    const isTablet = window.innerWidth <= 900;
+    if (isTablet) {
+      progressFill.style.width = `${progress * 100}%`;
+      progressFill.style.height = '100%';
+      progressDot.style.left = `${progress * 100}%`;
+      progressDot.style.top = '50%';
+    } else {
+      progressFill.style.height = `${progress * 100}%`;
+      progressFill.style.width = '100%';
+      progressDot.style.top = `${progress * 100}%`;
+      progressDot.style.left = '50%';
+    }
 
     // 2. Determine which card is active based on 4 segments
     const activeIndex = Math.min(3, Math.floor(progress * 4));

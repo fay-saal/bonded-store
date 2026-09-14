@@ -31,7 +31,7 @@ export function initCursor() {
 
   // Hover states using event delegation (since DOM updates dynamically)
   document.body.addEventListener('mouseover', (e) => {
-    const target = e.target.closest('button, a, .product-card, .bento-card');
+    const target = e.target.closest('button, a, .product-card');
     if (target) {
       ring.classList.add('cursor-ring--hover');
       dot.style.opacity = 0;
@@ -42,7 +42,7 @@ export function initCursor() {
   });
 
   document.body.addEventListener('mouseout', (e) => {
-    const target = e.target.closest('button, a, .product-card, .bento-card');
+    const target = e.target.closest('button, a, .product-card');
     if (target) {
       ring.classList.remove('cursor-ring--hover');
       dot.style.opacity = 1;
