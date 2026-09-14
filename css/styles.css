@@ -1226,6 +1226,7 @@ input, select { font-family: inherit; }
     transform: none !important;
     height: auto;
     min-height: 200px;
+    overflow: hidden !important;
   }
   .bento-card__content { padding: 24px; }
   .bento-card__title { font-size: 1.4rem; }
