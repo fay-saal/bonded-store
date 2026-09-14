@@ -201,11 +201,9 @@ function addToCart(productId) {
   renderCart();
   showToast(`${product.name} added to cart`, 'success');
   
-  // Open cart automatically on desktop if added from grid
-  if (window.innerWidth > 768) {
-    document.getElementById('cart-drawer').classList.add('open');
-    document.getElementById('cart-overlay').classList.add('open');
-  }
+  // Open cart automatically on all devices
+  document.getElementById('cart-drawer').classList.add('open');
+  document.getElementById('cart-overlay').classList.add('open');
 }
 
 function saveCart() {

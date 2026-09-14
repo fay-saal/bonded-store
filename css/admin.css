@@ -512,7 +512,22 @@
 
 @media (max-width: 500px) {
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .stat-card {
+    padding: 16px;
+  }
+  .stat-value {
+    font-size: 1.4rem;
+  }
+  .calc-toggle {
+    top: 50%;
+    bottom: auto;
+    right: 12px;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
   }
   .login-box {
     padding: 24px;
