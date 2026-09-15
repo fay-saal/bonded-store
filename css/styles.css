@@ -326,6 +326,7 @@ input, select { font-family: inherit; }
   margin: 20px auto 0;
   padding: 0 clamp(16px, 3vw, 32px);
   z-index: 1;
+  overflow: visible;
 }
 
 .carousel__track {
@@ -649,16 +650,17 @@ input, select { font-family: inherit; }
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: all var(--dur-normal) var(--ease-out);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+  will-change: transform, opacity;
   position: relative;
   box-shadow: var(--shadow-sm);
   cursor: pointer;
 }
 
 .product-card:hover {
-  border-color: rgba(45, 79, 255, 0.5);
-  box-shadow: 0 0 30px rgba(45, 79, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.4);
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(45, 79, 255, 0.2);
+  border-color: rgba(45, 79, 255, 0.4);
 }
 
 .product-card__image-area {
@@ -2090,11 +2092,7 @@ main {
   transform: translateY(-10px);
 }
 
-/* PRODUCT CARD STAGGER & HOVER */
-.product-card {
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
-  will-change: transform, opacity;
-}
+/* PRODUCT CARD STAGGER */
 .product-card.reveal-hidden {
   opacity: 0;
   transform: translateY(30px) scale(0.95);
@@ -2103,11 +2101,6 @@ main {
   opacity: 1;
   transform: translateY(0) scale(1);
   transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.product-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(45, 79, 255, 0.2);
-  border-color: rgba(45, 79, 255, 0.4);
 }
 
 /* BUTTON SHIMMER & MAGNETIC */
@@ -2135,9 +2128,6 @@ main {
 }
 
 /* HERO ORB BREATHE */
-.topo-bg {
-  animation: breathe 8s ease-in-out infinite alternate;
-}
 @keyframes breathe {
   0% { transform: scale(1); opacity: 0.8; }
   100% { transform: scale(1.05); opacity: 1; }
@@ -2209,10 +2199,6 @@ main {
 }
 
 /* HERO ANIMATED BORDER */
-.hero-carousel {
-  position: relative;
-  overflow: visible;
-}
 .hero-carousel::before {
   content: '';
   position: absolute;
@@ -3225,14 +3211,14 @@ button:active, .btn:active, .product-card:active {
 .chat-scroll-prompt strong {
   font-weight: 700;
 }
-.pulse-dot {
+.chat-pulse-dot {
   display: inline-block;
   width: 8px; height: 8px;
   background: #ffcc00;
   border-radius: 50%;
-  animation: pulse 1.5s infinite;
+  animation: chat-pulse 1.5s infinite;
 }
-@keyframes pulse {
+@keyframes chat-pulse {
   0% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7); }
   70% { box-shadow: 0 0 0 10px rgba(255, 204, 0, 0); }
   100% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0); }
