@@ -306,8 +306,9 @@ input, select { font-family: inherit; }
   flex-shrink: 0;
 }
 .catbar__pill:hover {
-  color: var(--text-primary);
-  background: rgba(255,255,255,0.04);
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 .catbar__pill.active {
   color: var(--text-primary);
@@ -1451,9 +1452,13 @@ input, select { font-family: inherit; }
   flex: 1;
   background: linear-gradient(135deg, var(--accent), var(--accent-deep));
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  border-radius: var(--radius-sm);
+  padding: 14px 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-glow);
   transition: transform var(--dur-fast), box-shadow var(--dur-fast);
   border: 1px solid rgba(45, 79, 255, 0.3);
