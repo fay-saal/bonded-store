@@ -29,14 +29,17 @@ export function initCursor() {
   }
   requestAnimationFrame(render);
 
-  // Hover states using event delegation (since DOM updates dynamically)
   document.body.addEventListener('mouseover', (e) => {
     const target = e.target.closest('button, a, .product-card');
     if (target) {
       ring.classList.add('cursor-ring--hover');
-      dot.style.opacity = 0;
-      if (target.classList.contains('product-card')) {
+      dot.style.opacity = '0';
+      
+      const productCard = e.target.closest('.product-card');
+      if (productCard && !e.target.closest('button, a:not(.product-card)')) {
         ring.querySelector('.cursor-text').textContent = "View";
+      } else {
+        ring.querySelector('.cursor-text').textContent = "";
       }
     }
   });
@@ -44,8 +47,13 @@ export function initCursor() {
   document.body.addEventListener('mouseout', (e) => {
     const target = e.target.closest('button, a, .product-card');
     if (target) {
+      // Check if we are moving to a child of the current target
+      if (e.relatedTarget && target.contains(e.relatedTarget)) {
+        return; // Don't remove hover state if moving between children
+      }
+      
       ring.classList.remove('cursor-ring--hover');
-      dot.style.opacity = 1;
+      dot.style.opacity = '1';
       ring.querySelector('.cursor-text').textContent = "";
     }
   });

@@ -8,11 +8,14 @@
   font-family: 'DM Sans', sans-serif;
   margin: 0;
   padding: 0;
-  cursor: auto !important;
+  cursor: default !important;
 }
 
-.admin-body a, .admin-body button, .admin-body input, .admin-body select, .admin-body textarea {
-  cursor: auto !important;
+.admin-body a, .admin-body button, .admin-body select, .admin-body .conv-item {
+  cursor: pointer !important;
+}
+.admin-body input, .admin-body textarea {
+  cursor: text !important;
 }
 
 /* LOGIN GATE */
