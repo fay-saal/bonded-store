@@ -2645,20 +2645,20 @@ main {
     position: fixed;
     top: 0; left: 0;
     width: 8px; height: 8px;
-    background: var(--accent-light);
+    background: var(--accent);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
     transition: opacity 0.2s ease;
     mix-blend-mode: screen;
-    box-shadow: 0 0 8px var(--accent-light);
+    box-shadow: 0 0 8px var(--accent);
   }
   #cursor-ring {
     position: fixed;
     top: 0; left: 0;
     width: 32px; height: 32px;
-    border: 1px solid rgba(0, 200, 255, 0.5);
+    border: 1px solid var(--accent);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9998;
@@ -2671,13 +2671,13 @@ main {
   }
   #cursor-ring.cursor-ring--hover {
     width: 64px; height: 64px;
-    background: rgba(0, 200, 255, 0.1);
-    border-color: rgba(0, 200, 255, 0.8);
+    background: rgba(45, 79, 255, 0.15);
+    border-color: var(--accent);
   }
   .cursor-text {
     font-size: 10px;
     font-weight: 700;
-    color: var(--accent-light);
+    color: var(--accent);
     opacity: 0;
     transition: opacity 0.3s ease;
     text-transform: uppercase;
