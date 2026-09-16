@@ -2568,6 +2568,10 @@ main {
     position: relative;
     height: auto;
     padding: 40px clamp(16px, 3vw, 32px);
+    overflow: visible;
+  }
+  .bento-layout {
+    max-height: none;
   }
   .bento-cards-stack {
     position: relative;
