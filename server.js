@@ -62,7 +62,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // Once you verify a domain at resend.com/domains, update RESEND_FROM_EMAIL and remove the TO override.
 const ADMIN_EMAIL = process.env.RESEND_TO_EMAIL || 'faysaalofficial@gmail.com';
 
-async function sendOrderConfirmationEmail({ customerEmail, customerName, orderId, orderDate, items, total, paymentMethod }) {
+async function sendAdminNewOrderEmail({ customerEmail, customerName, orderId, orderDate, items, total, paymentMethod }) {
   if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'your_resend_api_key') {
     console.log('📧 Email skipped — RESEND_API_KEY not configured in .env');
     return;
@@ -186,6 +186,77 @@ async function sendOrderConfirmationEmail({ customerEmail, customerName, orderId
   }
 }
 
+async function sendCustomerInvoiceEmail(order) {
+  if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'your_resend_api_key') {
+    return;
+  }
+
+  const codesHtml = (order.deliveredCodes || []).map(dc => `
+    <div style="background: rgba(0, 200, 255, 0.1); border: 1px solid #00c8ff; border-radius: 8px; padding: 16px; margin-bottom: 12px; text-align: center;">
+      <p style="margin:0 0 8px; color:#cdd6f4; font-size:14px;"><strong>${dc.productName}</strong> (Qty: ${dc.qty})</p>
+      <p style="margin:0; color:#00c8ff; font-size:24px; font-weight:800; letter-spacing:4px; font-family:'Courier New',monospace;">${dc.code}</p>
+    </div>
+  `).join('');
+
+  const htmlBody = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0; padding:0; background-color:#0d1117; font-family: 'Segoe UI', Arial, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0d1117; padding: 40px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%;">
+        <!-- HEADER -->
+        <tr>
+          <td style="background: linear-gradient(135deg, #0d1117, #161b22); border: 1px solid #1e2a3a; border-radius: 16px 16px 0 0; padding: 36px 40px; text-align: center;">
+            <h1 style="margin:0; font-size:26px; font-weight:800; color:#fff;">🛒 BONDED</h1>
+            <p style="margin:4px 0 0; color:#00ff88; font-size:12px; letter-spacing:2px; text-transform:uppercase;">Order Delivered</p>
+          </td>
+        </tr>
+        <!-- ORDER ID HERO -->
+        <tr>
+          <td style="background: #161b22; border-left:1px solid #1e2a3a; border-right:1px solid #1e2a3a; padding:32px 40px; text-align:center;">
+            <p style="margin:0 0 8px; color:#636e7b; font-size:11px; letter-spacing:3px; text-transform:uppercase;">Invoice No.</p>
+            <p style="margin:0; color:#cdd6f4; font-size:24px; font-weight:800; letter-spacing:2px; font-family:'Courier New',monospace;">${order.id}</p>
+            <p style="margin:8px 0 0; color:#636e7b; font-size:12px;">Paid via ${order.payment.method.toUpperCase()} • ৳${order.total.toLocaleString()}</p>
+          </td>
+        </tr>
+        <!-- CODES -->
+        <tr>
+          <td style="background:#161b22; border-left:1px solid #1e2a3a; border-right:1px solid #1e2a3a; padding:24px 40px;">
+            <p style="margin:0 0 16px; color:#636e7b; font-size:11px; letter-spacing:2px; text-transform:uppercase; text-align:center;">Your Digital Codes</p>
+            ${codesHtml}
+          </td>
+        </tr>
+        <!-- FOOTER -->
+        <tr>
+          <td style="background:#0d1117; border:1px solid #1e2a3a; border-radius:0 0 16px 16px; padding:20px 40px; text-align:center;">
+            <p style="margin:0; color:#8892a4; font-size:13px;">Thank you for shopping with BONDED!</p>
+            <p style="margin:12px 0 0; color:#2d3340; font-size:11px;">© 2026 Bonded Digital Store</p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
+  try {
+    const { error } = await resend.emails.send({
+      from: 'Bonded Store <onboarding@resend.dev>',
+      to: order.customerEmail,
+      subject: \`Your BONDED Invoice #\${order.id}\`,
+      html: htmlBody
+    });
+    if (error) {
+      console.error('[Resend Customer Invoice Error]:', JSON.stringify(error));
+    } else {
+      console.log(\`📧 Invoice sent to customer (\${order.customerEmail}) for order \${order.id}\`);
+    }
+  } catch (err) {
+    console.error('Email send error:', err.message);
+  }
+}
 
 // ── JWT AUTH MIDDLEWARE ─────────────────────────────────
 function authMiddleware(req, res, next) {
@@ -349,9 +420,9 @@ app.post('/api/orders', async (req, res) => {
     // Notify Discord
     sendDiscordNotification(`🛒 **New Order Placed!**\n**ID:** ${orderId}\n**Customer:** ${customerName || 'N/A'} (${customerEmail || 'no email'})\n**Total:** ৳${total}\n**Payment:** ${paymentMethod} (${paymentTrx})`);
 
-    // Send confirmation email (non-blocking)
+    // Send alert email to admin (non-blocking)
     if (customerEmail) {
-      sendOrderConfirmationEmail({
+      sendAdminNewOrderEmail({
         to: customerEmail,
         customerName: customerName || 'Customer',
         orderId,
@@ -394,6 +465,11 @@ app.post('/api/admin/orders/:id/verify', authMiddleware, async (req, res) => {
         code: Math.random().toString(36).substring(2, 10).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase()
       }));
       sendDiscordNotification(`✅ **Order Fulfilled!**\n**ID:** ${order.id} has been processed and codes delivered.`);
+      
+      // Send invoice email to customer (non-blocking)
+      if (order.customerEmail) {
+        sendCustomerInvoiceEmail(order);
+      }
     } else if (status === 'Rejected') {
       sendDiscordNotification(`❌ **Order Rejected!**\n**ID:** ${order.id} has been rejected.`);
     }
