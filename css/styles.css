@@ -2533,8 +2533,13 @@ main {
   }
   .bento-card__title--large { font-size: 3rem; }
   
+  #bento-card-1 .bento-card__content {
+    padding-bottom: 0;
+  }
   .bento-mock-ui {
-    margin-bottom: -24px;
+    margin-bottom: 0;
+    margin-top: auto;
+    flex: 0 0 auto;
   }
   .bento-notification {
     width: 90%;
