@@ -2559,6 +2559,35 @@ main {
   }
 }
 
+@media (max-width: 768px) {
+  .scroll-sequence-wrapper {
+    height: auto !important;
+    margin-top: 60px;
+  }
+  .bento-section {
+    position: relative;
+    height: auto;
+    padding: 40px clamp(16px, 3vw, 32px);
+  }
+  .bento-cards-stack {
+    position: relative;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .bento-card--stacked {
+    position: relative;
+    opacity: 1;
+    transform: none;
+    height: auto;
+    min-height: 200px;
+  }
+  .bento-progress-col {
+    display: none;
+  }
+}
+
 /* ════════════════════════════════════════════════════════════
    ANIMATED GRADIENT MESH BACKGROUND
    ════════════════════════════════════════════════════════════ */
