@@ -173,7 +173,7 @@ async function sendAdminNewOrderEmail({ customerEmail, customerName, orderId, or
 
   try {
     const { error } = await resend.emails.send({
-      from: 'Bonded Store <onboarding@resend.dev>',
+      from: process.env.RESEND_FROM_EMAIL ? `BONDED STORE <${process.env.RESEND_FROM_EMAIL}>` : 'Bonded Store <onboarding@resend.dev>',
       to: ADMIN_EMAIL,
       subject: `🛒 New Order ${orderId} — ৳${total.toLocaleString()} from ${customerName}`,
       html: htmlBody
@@ -245,7 +245,7 @@ async function sendCustomerInvoiceEmail(order) {
 
   try {
     const { error } = await resend.emails.send({
-      from: 'Bonded Store <onboarding@resend.dev>',
+      from: process.env.RESEND_FROM_EMAIL ? `BONDED STORE <${process.env.RESEND_FROM_EMAIL}>` : 'Bonded Store <onboarding@resend.dev>',
       to: order.customerEmail,
       subject: `Your BONDED Invoice #${order.id}`,
       html: htmlBody
