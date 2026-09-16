@@ -2532,6 +2532,26 @@ main {
     padding: 24px;
   }
   .bento-card__title--large { font-size: 3rem; }
+  
+  .bento-mock-ui {
+    margin-bottom: -24px;
+  }
+  .bento-notification {
+    width: 90%;
+    padding: 12px 16px;
+  }
+  .bento-notification-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .bento-card__icon {
+    width: 48px;
+    height: 48px;
+  }
+  .bento-card__icon-row {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
 }
 
 /* ════════════════════════════════════════════════════════════
