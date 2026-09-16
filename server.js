@@ -245,13 +245,13 @@ async function sendCustomerInvoiceEmail(order) {
     const { error } = await resend.emails.send({
       from: 'Bonded Store <onboarding@resend.dev>',
       to: order.customerEmail,
-      subject: \`Your BONDED Invoice #\${order.id}\`,
+      subject: `Your BONDED Invoice #${order.id}`,
       html: htmlBody
     });
     if (error) {
       console.error('[Resend Customer Invoice Error]:', JSON.stringify(error));
     } else {
-      console.log(\`📧 Invoice sent to customer (\${order.customerEmail}) for order \${order.id}\`);
+      console.log(`📧 Invoice sent to customer (${order.customerEmail}) for order ${order.id}`);
     }
   } catch (err) {
     console.error('Email send error:', err.message);
