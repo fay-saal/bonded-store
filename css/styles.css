@@ -3416,3 +3416,35 @@ button:active, .btn:active, .product-card:active {
     padding: 0 12px !important;
   }
 }
+/* ==========================================================================
+   SUPPORT VIEW
+   ========================================================================== */
+.support-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .support-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.support-card {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.support-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 48px rgba(0, 200, 255, 0.1);
+  border-color: rgba(0, 200, 255, 0.3);
+}

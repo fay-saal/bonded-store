@@ -230,6 +230,13 @@ async function sendCustomerInvoiceEmail(order) {
             ${codesHtml}
           </td>
         </tr>
+        <!-- CONTACT SUPPORT -->
+        <tr>
+          <td style="background:#161b22; border-left:1px solid #1e2a3a; border-right:1px solid #1e2a3a; padding:0 40px 32px; text-align:center;">
+            <p style="margin:0 0 16px; color:#8892a4; font-size:13px;">Have an issue or question about your order?</p>
+            <a href="https://bondedshop.site/#/support" style="display:inline-block; padding:12px 24px; background:#00c8ff; color:#0d1117; text-decoration:none; font-weight:700; border-radius:8px; font-size:13px; text-transform:uppercase; letter-spacing:1px;">Contact Support</a>
+          </td>
+        </tr>
         <!-- FOOTER -->
         <tr>
           <td style="background:#0d1117; border:1px solid #1e2a3a; border-radius:0 0 16px 16px; padding:20px 40px; text-align:center;">

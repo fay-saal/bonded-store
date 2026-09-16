@@ -1157,6 +1157,42 @@ async function renderMyOrdersView() {
 
   window.scrollTo(0, 0);
 }
+function renderSupportView() {
+  const btn = document.getElementById('support-btn-track');
+  const input = document.getElementById('support-track-id');
+  const error = document.getElementById('support-track-error');
+  
+  if (btn) {
+    btn.onclick = async () => {
+      const val = input.value.trim().toUpperCase();
+      if (!val) return;
+      error.style.display = 'none';
+      
+      btn.disabled = true;
+      btn.textContent = 'Searching...';
+      
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/orders/${val}`);
+        if (res.ok) {
+          window.location.hash = `#/order/${val}`;
+        } else {
+          error.style.display = 'block';
+        }
+      } catch (err) {
+        error.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Find Order';
+      }
+    };
+    
+    input.onkeypress = (e) => {
+      if (e.key === 'Enter') btn.click();
+    };
+  }
+  
+  window.scrollTo(0, 0);
+}
 
 
 // ── Router ────────────────────────────────────────────────────
@@ -1167,6 +1203,7 @@ function handleRouting() {
   const checkoutView = document.getElementById('checkout-view');
   const orderView = document.getElementById('order-view');
   const myOrdersView = document.getElementById('my-orders-view');
+  const supportView = document.getElementById('support-view');
 
   // Hide all by default
   homeView.style.display = 'none';
@@ -1174,6 +1211,7 @@ function handleRouting() {
   checkoutView.style.display = 'none';
   orderView.style.display = 'none';
   myOrdersView.style.display = 'none';
+  if (supportView) supportView.style.display = 'none';
 
   if (hash.startsWith('#/product/')) {
     const productId = hash.replace('#/product/', '');
@@ -1189,6 +1227,9 @@ function handleRouting() {
   } else if (hash === '#/my-orders') {
     myOrdersView.style.display = 'block';
     renderMyOrdersView();
+  } else if (hash === '#/support') {
+    if (supportView) supportView.style.display = 'block';
+    renderSupportView();
   } else if (hash === '#/products') {
     // "Browse Store" button — show home and scroll to product grid
     homeView.style.display = 'block';
