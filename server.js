@@ -58,9 +58,11 @@ async function sendDiscordNotification(message) {
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // NOTE: Resend free plan (without verified domain) can only send to the account owner's email.
-// We send order alerts to the admin (faysaalofficial@gmail.com) with all customer info.
+// We send order alerts to the admin (faysaalofficial@gmail.com and bondedbazar@gmail.com) with all customer info.
 // Once you verify a domain at resend.com/domains, update RESEND_FROM_EMAIL and remove the TO override.
-const ADMIN_EMAIL = process.env.RESEND_TO_EMAIL || 'faysaalofficial@gmail.com';
+const ADMIN_EMAIL = process.env.RESEND_TO_EMAIL 
+  ? process.env.RESEND_TO_EMAIL.split(',') 
+  : ['faysaalofficial@gmail.com', 'bondedbazar@gmail.com'];
 
 async function sendAdminNewOrderEmail({ customerEmail, customerName, orderId, orderDate, items, total, paymentMethod }) {
   if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'your_resend_api_key') {
